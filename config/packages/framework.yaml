@@ -1,0 +1,41 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: en
+    translator:
+        fallbacks: ['en']
+    #csrf_protection: true
+    #http_method_override: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    # Remove or comment this section to explicitly disable session support.
+    session:
+        handler_id: ~
+        cookie_secure: auto
+        cookie_samesite: lax
+
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: true
+fos_oauth_server:
+    authorize: false
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        App\Entity\Client
+    access_token_class:  App\Entity\AccessToken
+    refresh_token_class: App\Entity\RefreshToken
+    auth_code_class:     App\Entity\AuthCode
+    service:
+        user_provider: security.user.provider.concrete.app_user_provider #instead of use my_database_provider only
+        options:
+          access_token_lifetime: 86400
+          refresh_token_lifetime: 1209600
+          auth_code_lifetime: 30
+# Nelmio CORS
+nelmio_cors:
+        defaults:
+            allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            allow_headers: ['content-type', 'authorization']
+            expose_headers: ['link']
+            max_age: 3600
+
